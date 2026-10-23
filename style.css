@@ -1,0 +1,427 @@
+/* ==========================================================================
+   Design System & CSS Custom Properties (:root)
+   ========================================================================== */
+:root {
+  /* Khai báo các biến mặc định */
+  --primary-color: #10b981;       /* Xanh lá Emerald (Eco mặc định) */
+  --bg-color: #f8fafc;            /* Nền sáng dịu mắt (Light Slate) */
+  --text-color: #0f172a;          /* Chữ đen than đậm, tương phản cao */
+  --font-main: 'Quicksand', system-ui, -apple-system, sans-serif;
+
+  /* Các biến bổ trợ tự động mix theo --primary-color */
+  --primary-light: color-mix(in srgb, var(--primary-color) 12%, transparent);
+  --text-muted: #64748b;
+  --surface-card: #ffffff;
+  --header-bg: rgba(248, 250, 252, 0.85);
+  --border-color: rgba(15, 23, 42, 0.08);
+  --shadow-glow: 0 10px 25px -5px color-mix(in srgb, var(--primary-color) 35%, transparent);
+  --card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+  --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-full: 9999px;
+}
+
+/* ==========================================================================
+   Dark Theme: Ghi đè các biến màu sắc khi thẻ <body> có class .dark-theme
+   ========================================================================== */
+body.dark-theme {
+  --bg-color: #0b0f19;            /* Đen sâu / Dark Slate huyền bí */
+  --text-color: #f8fafc;          /* Chữ trắng ngà mềm mại, chống chói mắt */
+  --text-muted: #94a3b8;
+  --surface-card: rgba(17, 24, 39, 0.75);
+  --header-bg: rgba(11, 15, 25, 0.85);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --shadow-glow: 0 10px 25px -5px color-mix(in srgb, var(--primary-color) 50%, transparent);
+  --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   CSS Reset & Base Setup
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease, font-family 0.2s ease;
+}
+
+/* Hiệu ứng Ambient Glow nền phía sau */
+body::before {
+  content: '';
+  position: absolute;
+  top: -150px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 650px;
+  height: 450px;
+  background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  transition: background 0.4s ease;
+}
+
+.container {
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   Header Component
+   ========================================================================== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background-color: var(--header-bg);
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 76px;
+  gap: 16px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-color);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  transition: color 0.3s ease;
+}
+
+.logo-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--primary-color), color-mix(in srgb, var(--primary-color) 40%, white));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 800;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary-color) 35%, transparent);
+  transition: var(--transition-smooth);
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 32px;
+}
+
+.nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: var(--transition-smooth);
+}
+
+.nav-link:hover {
+  color: var(--text-color);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ==========================================================================
+   Brand Theme Switcher Pill Bar
+   ========================================================================== */
+.brand-switcher-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface-card);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--card-shadow);
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.switcher-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.brand-switcher-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.brand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid transparent;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.brand-btn:hover {
+  background: var(--primary-light);
+}
+
+.brand-btn.active {
+  background: var(--primary-light);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.color-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.eco-dot { background-color: #10b981; }
+.luxury-dot { background-color: #d4af37; }
+.cyberpunk-dot { background-color: #06b6d4; }
+
+/* ==========================================================================
+   Toggle Dark/Light Mode Button
+   ========================================================================== */
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--surface-card);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  padding: 8px 16px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--card-shadow);
+  transition: var(--transition-smooth);
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-1px);
+}
+
+.theme-toggle-btn .theme-icon {
+  font-size: 1rem;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle-btn:active .theme-icon {
+  transform: rotate(30deg) scale(1.1);
+}
+
+/* ==========================================================================
+   Buttons (CTA)
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: var(--transition-smooth);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  box-shadow: var(--shadow-glow);
+}
+
+.btn-primary:hover {
+  filter: brightness(0.92);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: var(--primary-light);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
+.hero-section {
+  padding: 70px 0 70px;
+  text-align: center;
+}
+
+.tagline {
+  display: inline-block;
+  padding: 6px 16px;
+  background-color: var(--primary-light);
+  color: var(--primary-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 22px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.hero-title {
+  font-size: clamp(2.1rem, 5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+  max-width: 860px;
+  margin-inline: auto;
+  transition: color 0.3s ease;
+}
+
+.hero-desc {
+  font-size: clamp(1.05rem, 2vw, 1.22rem);
+  color: var(--text-muted);
+  max-width: 680px;
+  margin: 0 auto 36px;
+  font-weight: 400;
+  line-height: 1.7;
+  transition: color 0.3s ease;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   Feature Cards Showcase
+   ========================================================================== */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  padding: 50px 0 90px;
+}
+
+.feature-card {
+  background-color: var(--surface-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 32px 26px;
+  box-shadow: var(--card-shadow);
+  transition: var(--transition-smooth);
+  text-align: left;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary-color);
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background-color: var(--primary-light);
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 18px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.feature-card h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.feature-card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.site-footer {
+  border-top: 1px solid var(--border-color);
+  padding: 30px 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+}

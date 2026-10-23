@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brand Showcase — Design System Landing Page</title>
+  
+  <!-- Font Typography cho 3 phong cách Theme:
+       1. Quicksand (Eco: Tròn trịa, tự nhiên)
+       2. Playfair Display (Luxury: Có chân, quý phái)
+       3. Orbitron (Cyberpunk: Góc cạnh, vị lai công nghệ)
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Tránh giật sáng (FOUC) khi reload trang -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('aurabrand_theme_preference');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark-theme');
+        document.addEventListener('DOMContentLoaded', () => document.body.classList.add('dark-theme'));
+      }
+
+      const savedBrand = localStorage.getItem('aurabrand_brand_preset') || 'eco';
+      const colors = { eco: '#10b981', luxury: '#d4af37', cyberpunk: '#06b6d4' };
+      const fonts = {
+        eco: "'Quicksand', system-ui, sans-serif",
+        luxury: "'Playfair Display', Georgia, serif",
+        cyberpunk: "'Orbitron', 'Plus Jakarta Sans', system-ui, sans-serif"
+      };
+      if (colors[savedBrand]) {
+        document.documentElement.style.setProperty('--primary-color', colors[savedBrand]);
+        document.documentElement.style.setProperty('--font-main', fonts[savedBrand]);
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="logo">
+        <span id="logo-badge" class="logo-badge">✦</span>
+        <span>AuraBrand</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#features" class="nav-link">Tính năng</a></li>
+          <li><a href="#themes" class="nav-link">Bộ Theme</a></li>
+          <li><a href="#pricing" class="nav-link">Bảng giá</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <!-- Nút Toggle Dark/Light Mode -->
+        <button id="theme-toggle" class="theme-toggle-btn" type="button" aria-label="Toggle Theme">
+          <span id="theme-icon" class="theme-icon">☀️</span>
+          <span id="theme-label">Light</span>
+        </button>
+
+        <a href="#contact" class="btn btn-primary">Bắt đầu ngay</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero-section">
+      <div class="container">
+        
+        <!-- Bộ nút bấm chuyển đổi 3 Theme -->
+        <div id="themes" class="brand-switcher-wrapper">
+          <span class="switcher-label">Chọn Theme:</span>
+          <div class="brand-switcher-group" role="group" aria-label="Brand Theme Switcher">
+            <button type="button" class="brand-btn" data-theme="eco">
+              <span class="color-dot eco-dot"></span> 🌿 Eco
+            </button>
+            <button type="button" class="brand-btn" data-theme="luxury">
+              <span class="color-dot luxury-dot"></span> 👑 Luxury
+            </button>
+            <button type="button" class="brand-btn" data-theme="cyberpunk">
+              <span class="color-dot cyberpunk-dot"></span> ⚡ Cyberpunk
+            </button>
+          </div>
+        </div>
+
+        <span id="hero-tagline" class="tagline">🌿 Sống Xanh Bền Vững</span>
+        <h1 id="hero-title" class="hero-title">
+          Hòa Cùng Nhịp Đập Tự Nhiên, Kiến Tạo Tương Lai Xanh
+        </h1>
+        <p id="hero-desc" class="hero-desc">
+          Định hình lối sống bền vững với các giải pháp thân thiện môi trường, giảm thiểu rác thải carbon và nuôi dưỡng hành tinh xanh cho thế hệ mai sau.
+        </p>
+
+        <div class="hero-actions">
+          <a id="hero-cta-primary" href="#get-started" class="btn btn-primary">Tham Gia Sống Xanh →</a>
+          <a id="hero-cta-secondary" href="#demo" class="btn btn-secondary">Khám Phá Dự Án Xanh</a>
+        </div>
+
+        <!-- Feature Cards -->
+        <div id="features" class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🌿</div>
+            <h3>1. Theme Eco</h3>
+            <p>Sắc xanh ngọc (#10b981) cùng font tròn trịa <em>Quicksand</em> lan tỏa cảm hứng sống xanh, mộc mạc và chở che môi trường.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">👑</div>
+            <h3>2. Theme Luxury</h3>
+            <p>Vàng đồng hoàng gia (#d4af37) cùng font serif <em>Playfair Display</em> tôn vinh đẳng cấp thượng lưu, độc bản và kiêu hãnh.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>3. Theme Cyberpunk</h3>
+            <p>Ánh điện Neon Cyan (#06b6d4) cùng font vị lai <em>Orbitron</em> mô phỏng tương lai 2077 công nghệ cao và đột phá thời đại.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 AuraBrand. Thiết kế bởi UI/UX Specialist — Hệ thống Dynamic Theme & Content.</p>
+    </div>
+  </footer>
+
+  <!-- Script điều khiển Theme & Content Switcher -->
+  <script src="script.js"></script>
+</body>
+</html>
